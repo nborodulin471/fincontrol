@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Предупреждение</title>
+    <link rel="stylesheet" href="/css/header.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Главная</a></li>
+            <li><a th:href="@{/showCategory}">Категории</a></li>
+            <li><a th:href="@{/showBalance}">Остатки</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="container mt-5">
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Внимание!</h4>
+        <p th:text="${message}"></p>
+        <hr>
+        <p class="mb-0">Пожалуйста, перейдите на главную страницу для дальнейших действий.</p>
+    </div>
+    <a th:href="@{/}" class="btn btn-primary">На главную страницу</a>
+</div>
+</body>
+</html>
