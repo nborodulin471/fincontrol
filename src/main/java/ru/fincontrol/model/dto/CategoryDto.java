@@ -1,4 +1,19 @@
 package ru.fincontrol.model.dto;
 
-public class CategoryDto {
+
+import ru.fincontrol.model.entity.Category;
+
+import java.math.BigDecimal;
+
+/**
+ * Модель для отображения категорий.
+ *
+ * @author Бородулин Никита Петрович.
+ */
+public record CategoryDto(long id, String name, BigDecimal limiter) {
+
+    public static CategoryDto map(Category category) {
+        return new CategoryDto(category.getId(), category.getName(), category.getLimiter());
+    }
+
 }

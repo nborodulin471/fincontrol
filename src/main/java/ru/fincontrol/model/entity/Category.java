@@ -1,4 +1,4 @@
-package ru.fincontrol.model;
+package ru.fincontrol.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +10,13 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
+/**
+ * Сущность, которая хранит категории.
+ *
+ * @author Бородулин Никита Петрович.
+ */
 @Getter
 @Setter
 @Entity
@@ -17,10 +24,10 @@ import lombok.Setter;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private String name;
-    private int limiter;
+    private BigDecimal limiter;
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "wallet_id", nullable = false)
+    private Wallet wallet;
 }

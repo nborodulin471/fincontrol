@@ -1,4 +1,4 @@
-package ru.fincontrol.model;
+package ru.fincontrol.model.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,8 +10,13 @@ import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collection;
+import java.util.List;
 
+/**
+ * Сущность, которая хранит кошельки.
+ *
+ * @author Бородулин Никита Петрович.
+ */
 @Getter
 @Setter
 @Entity
@@ -20,8 +25,9 @@ public class Wallet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany(mappedBy = "wallet", fetch = FetchType.EAGER)
-    Collection<Operation> operations;
+    List<Operation> operations;
     @OneToOne
     private User user;
-
+    @OneToMany(mappedBy = "wallet", fetch = FetchType.EAGER)
+    List<Category> categories;
 }

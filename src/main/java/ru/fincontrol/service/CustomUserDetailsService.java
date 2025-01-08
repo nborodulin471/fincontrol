@@ -1,6 +1,5 @@
 package ru.fincontrol.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,14 +7,22 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import ru.fincontrol.dao.UserRepository;
-import ru.fincontrol.model.User;
+import ru.fincontrol.model.entity.User;
 
+/**
+ * Сервис, который отвечает за извлечение данных пользователя из БД.
+ *
+ * @author Бородулин Никита Петрович.
+ */
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
+    /**
+     * Загружает пользователя из БД по имени.
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -25,7 +32,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .roles(user.getRole())
                 .build();
     }
 }

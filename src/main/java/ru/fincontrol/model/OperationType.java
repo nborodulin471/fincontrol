@@ -1,5 +1,13 @@
-package ru.fincontrol.model.entity;
+package ru.fincontrol.model;
 
+import lombok.Getter;
+
+/**
+ * Перечисление, которое отражает типы операций.
+ *
+ * @author Бородулин Никита Петрович.
+ */
+@Getter
 public enum OperationType {
     PROFIT("Доход"),
     EXPENSE("Расход");
@@ -8,10 +16,6 @@ public enum OperationType {
 
     OperationType(String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public static OperationType valueByName(String name) {

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <title>Главная</title>
+    <meta charset="UTF-8">
+    <style>
+        .income-expenses {
+            display: flex;
+        }
+
+        .form-income-expenses {
+            width: 50%;
+        }
+
+        .summary-income-expenses-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    </style>
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/table.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Главная</a></li>
+            <li><a th:href="@{/showCategory}">Категории</a></li>
+            <li><a th:href="@{/showBalance}">Остатки</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="income-expenses">
+    <div class="form-income-expenses">
+        <h3>Учет доходов и расходов</h3>
+        <form action="#" th:action="@{/addOperation}" method="post">
+            <label for="amount">Введите сумму:</label>
+            <input type="number" id="amount" name="amount" step="0.01" required>
+            <br>
+
+            <label for="type">Выберете тип операции:</label>
+            <select id="type" name="type" required>
+                <option value="" disabled selected>Выберите тип</option>
+                <option th:each="type : ${typeOperations}"
+                        th:value="${type}"
+                        th:text="${type}"></option>
+            </select>
+            <label for="category">Выберите категорию:</label>
+            <select id="category" name="category" required>
+                <option value="" disabled selected>Выберите категорию</option>
+                <option th:each="category : ${categories}"
+                        th:value="${category.id()}"
+                        th:text="${category.name()}"></option>
+            </select>
+
+            <button type="submit">Добавить операцию</button>
+        </form>
+    </div>
+
+
+    <div class="summary-income-expenses">
+        <h3>Общие итоги:</h3>
+        <ul class="summary-income-expenses-items">
+            <li>Общие расходы: <span th:text="${totalExpense}"></span></li>
+            <li>Общие доходы: <span th:text="${totalProfit}"></span></li>
+            <li>Общий баланс: <span th:text="${totalBalance}"></span></li>
+        </ul>
+    </div>
+</div>
+
+<div>
+    <h3>Совершенные операции:</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Создано</th>
+            <th>Тип операции</th>
+            <th>Категория</th>
+            <th>Сумма</th>
+            <th>Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="operation : ${operations}">
+            <td th:text="${#dates.format(operation.getCreatedAt(), 'dd.MM.yyyy')}"></td>
+            <td th:text="${operation.getOperationType().getName()}"></td>
+            <td th:text="${operation.getCategory().getName()}"></td>
+            <td th:text="${operation.getAmount()}"></td>
+            <td>
+                <form action="#" th:action="@{/deleteOperation/{id}(id=${operation.getId()})}" method="post"
+                      style="display:inline;">
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td class="summary" colspan="3">Итого:</td>
+            <td><span th:text="${totalBalance}"></span></td>
+            <td></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+</body>
+</html>
